@@ -71,6 +71,7 @@ markAsDone(taskId: string) {
         .subscribe(() => {
           const task = this.tasks.find(t => t._id === taskId);
           if (task) task.status = 'done';
+          this.fetchTasks();
         });
     }
   );
@@ -83,9 +84,14 @@ deleteTask(taskId: string) {
     "Are you sure you want to delete?",
     () => {
       this.taskService.deleteTask(taskId).subscribe(() => {
+
+        // 🔥 ensure new reference
         this.tasks = this.tasks.filter(t => t._id !== taskId);
+        this.fetchTasks();
+
       });
     }
   );
 }
+
 }
