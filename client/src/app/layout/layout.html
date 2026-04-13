@@ -1,0 +1,57 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+  <!-- User Info -->
+  <div class="user-info">
+    <span class="material-icons user-icon">account_circle</span>
+    <div>
+      <p class="username">{{ username }}</p>
+      <small>Welcome back</small>
+    </div>
+  </div>
+
+  <h2 class="logo">TaskBoard</h2>
+
+  <ul class="menu">
+    <li routerLink="/dashboard" routerLinkActive="active">
+      <span class="material-icons">dashboard</span>
+      Dashboard
+    </li>
+
+    <li routerLink="/create-task" routerLinkActive="active">
+      <span class="material-icons">add_circle</span>
+      Create Task
+    </li>
+
+    <li (click)="logout()">
+      <span class="material-icons">logout</span>
+      Logout
+    </li>
+  </ul>
+
+</aside>
+
+  <!-- Main Content -->
+  <div class="main">
+    <router-outlet></router-outlet> <!-- 🔥 IMPORTANT -->
+  </div>
+
+</div>
+
+
+<!-- COMMON CONFIRM MODAL -->
+<div class="modal-backdrop" *ngIf="confirmService.show">
+
+  <div class="modal-box">
+    <h3>{{ confirmService.title }}</h3>
+    <p>{{ confirmService.message }}</p>
+
+    <div class="modal-actions">
+      <button (click)="confirmService.close()">Cancel</button>
+      <button (click)="confirmService.confirm()">Confirm</button>
+    </div>
+  </div>
+
+</div>

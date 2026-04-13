@@ -1,0 +1,74 @@
+<div class="layout">
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <div class="page">
+
+      <!-- Heading -->
+      <h2 class="page-title">My Tasks</h2>
+
+      <!-- Empty state -->
+      <p *ngIf="!tasks.length" class="empty">
+        No tasks yet 🚀
+      </p>
+
+      <!-- Task Grid -->
+      <div class="task-grid">
+
+        <div class="task-card" *ngFor="let task of tasks">
+
+          <!-- Priority bar -->
+          <div class="priority-bar {{task.priority}}"></div>
+
+          <div class="task-content">
+
+            <!-- Header -->
+            <div class="card-header">
+              <h3>{{ task.title }}</h3>
+
+              <span class="status {{task.status}}">
+                {{ task.status }}
+              </span>
+            </div>
+
+            <!-- Description -->
+            <p class="desc">
+              {{ task.description || 'No description provided' }}
+            </p>
+
+            <!-- Footer -->
+            <div class="card-footer">
+
+              <!-- Due date -->
+              <div class="due"
+                   >
+                <span class="material-icons">schedule</span>
+                {{ task.dueDate | date:'MMM d, y' }}
+              </div>
+
+              <!-- Actions -->
+              <div class="actions">
+                <button *ngIf="task.status !== 'done'"
+                        (click)="markAsDone(task._id)">
+                  <span class="material-icons">check</span>
+                </button>
+
+                <button (click)="deleteTask(task._id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

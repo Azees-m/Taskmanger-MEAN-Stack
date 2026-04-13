@@ -1,0 +1,122 @@
+<!-- <h2>Register</h2>
+
+<form (ngSubmit)="onRegister()">
+  <div>
+    <label>Email</label><br />
+    <input
+      type="email"
+      placeholder="Enter email"
+      [(ngModel)]="email"
+      name="email"
+      required
+    />
+  </div>
+
+  <br />
+
+  <div>
+    <label>Password</label><br />
+    <input
+      type="password"
+      placeholder="Enter password"
+      [(ngModel)]="password"
+      name="password"
+      required
+    />
+  </div>
+
+  <br />
+
+  <button type="submit">Register</button>
+</form>
+
+<p>
+  Already have an account?
+  <a routerLink="/login">Login</a>
+</p> -->
+
+
+<div class="page-container">
+  <div class="card">
+    <h2>Register</h2>
+
+<form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" novalidate>
+
+  <label>Name</label>
+  <input type="text" name="username" [(ngModel)]="name" #nameRef="ngModel" required
+  placeholder="Enter the Name" class="input-box"/>
+
+  <div *ngIf="registerForm.submitted && nameRef.invalid" class="error-text">
+    <small *ngIf="nameRef.errors?.['required']">Username is required</small>
+  </div>
+
+  <label>Email</label>
+  <input 
+    type="email"
+    name="email"
+    [(ngModel)]="email"
+    #emailRef="ngModel"
+    required
+    email
+    placeholder="Enter the email"
+    class="input-box"
+  />
+
+  <div *ngIf="registerForm.submitted && emailRef.invalid" class="error-text">
+    <small *ngIf="emailRef.errors?.['required']">Email is required</small>
+    <small *ngIf="emailRef.errors?.['email']">Enter a valid email</small>
+  </div>
+
+  <label>Password</label>
+  <input 
+    type="password"
+    name="password"
+    [(ngModel)]="password"
+    #passwordRef="ngModel"
+    required
+    minlength="6"
+    placeholder="Enter the Password"
+    class="input-box"
+  />
+
+  <div *ngIf="registerForm.submitted && passwordRef.invalid" class="error-text">
+    <small *ngIf="passwordRef.errors?.['required']">Password is required</small>
+    <small *ngIf="passwordRef.errors?.['minlength']">
+      Minimum 6 characters required
+    </small>
+  </div>
+
+  <label>Confirm Password</label>
+  <input 
+    type="password"
+    name="confirmpassword"
+    [(ngModel)]="confirmpassword"
+    #confirmRef="ngModel"
+    required
+    placeholder="Re-enter password"
+    class="input-box"
+  />
+
+  <div *ngIf="registerForm.submitted && password !== confirmpassword" class="error-text">
+    Passwords do not match
+  </div>
+
+  <button 
+    class="btn-success"
+    type="submit"
+    [disabled]="isLoading"
+  >
+    Register
+  </button>
+
+</form>
+
+
+
+
+    <p style="text-align:center; font-size: medium; font-weight: 600; ">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+  </div>
+</div>

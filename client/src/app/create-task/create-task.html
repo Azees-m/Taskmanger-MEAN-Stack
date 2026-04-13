@@ -1,0 +1,42 @@
+<div class="create-container">
+
+  <div class="form-card">
+    <h2>Create New Task</h2>
+
+    <!-- Title -->
+    <label>Task Title</label>
+    <input [(ngModel)]="title" placeholder="Enter task title" />
+
+    <!-- Description -->
+    <label>Description</label>
+    <textarea [(ngModel)]="description" placeholder="Enter task description"></textarea>
+
+    <!-- Priority -->
+    <label>Priority</label>
+    <select [(ngModel)]="priority">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+
+    <!-- Status -->
+    <label>Status</label>
+    <select [(ngModel)]="status">
+      <option value="todo">To Do</option>
+      <option value="in-progress">In Progress</option>
+      <option value="done">Done</option>
+    </select>
+
+    <!-- Due Date -->
+    <label>Due Date</label>
+    <input type="date" [(ngModel)]="dueDate" />
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button class="btn-primary" (click)="addTask()">Create Task</button>
+      <button class="btn-secondary" routerLink="/dashboard">Cancel</button>
+    </div>
+
+  </div>
+
+</div>

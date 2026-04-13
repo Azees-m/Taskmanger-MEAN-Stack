@@ -1,0 +1,102 @@
+<!-- <h2>Login</h2>
+
+<form (ngSubmit)="onLogin()">
+
+  <label>Email</label><br />
+  <input
+    type="email"
+    [(ngModel)]="email"
+    name="email"
+    required
+  /><br /><br />
+
+  <label>Password</label><br />
+  <input
+    type="password"
+    [(ngModel)]="password"
+    name="password"
+    required
+  /><br /><br />
+
+  <button type="submit" [disabled]="isLoading">
+    Login
+  </button>
+</form> -->
+
+<!--  Loading message -->
+<!-- <p *ngIf="isLoading">Logging in...</p> -->
+
+<!--  Error message -->
+<!-- <p *ngIf="errorMessage" style="color: red;">
+  {{ errorMessage }}
+</p> -->
+<!-- <p *ngIf="errorMessage" style="color: red;">
+  Invalid email or password
+</p> -->
+
+<!--<p>
+  New user?
+  <a routerLink="/register">Register here</a>
+</p> -->
+
+
+<div class="page-container">
+  <div class="card">
+    <h2>Login</h2>
+
+  <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)" novalidate>
+
+  <label>Email</label>
+  <input 
+    type="email"
+    [(ngModel)]="email"
+    #emailRef="ngModel"
+    name="email"
+    required
+    email
+    class="input-box"
+    placeholder="Enter your email"
+  />
+
+  <div *ngIf="loginForm.submitted && emailRef.invalid" class="error-text">
+    <small *ngIf="emailRef.errors?.['required']">Email is required</small>
+    <small *ngIf="emailRef.errors?.['email']">Enter a valid email</small>
+  </div>
+
+  <label>Password</label>
+  <input 
+    type="password"
+    [(ngModel)]="password"
+    #passwordRef="ngModel"
+    name="password"
+    required
+    minlength="6"
+    class="input-box"
+    placeholder="Enter your password"
+  />
+
+  <div *ngIf="loginForm.submitted && passwordRef.invalid" class="error-text">
+    <small *ngIf="passwordRef.errors?.['required']">Password is required</small>
+    <small *ngIf="passwordRef.errors?.['minlength']">
+      Minimum 6 characters required
+    </small>
+  </div>
+
+  <button class="btn-primary" type="submit" [disabled]="isLoading">
+    Login
+  </button>
+
+</form>
+
+    <!-- <p *ngIf="isLoading">Logging in...</p>
+
+    <p *ngIf="errorMessage" class="error-text">
+      Invalid email or Password
+    </p> -->
+
+    <p style="text-align:center; margin-top:8px; font-size: medium; font-weight: 600;">
+      Create a new Account ?
+      <a routerLink="/register">Register here</a>
+    </p>
+  </div>
+</div>
