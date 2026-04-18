@@ -34,29 +34,76 @@ setView(v: any) {
     private confirm:ConfirmService
   ) {}
 
+  
   ngOnInit() {
     this.fetchTasks();
   }
 
+
   trackById(index: number, task: any) {
   return task._id;
 }
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.fetchTasks();
+  }
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.fetchTasks();
+  }
+}
   // GET tasks
-fetchTasks() {
+  
+currentPage = 1;
+itemsPerPage = 5;
+
+selectedStatus = '';
+selectedPriority = '';
+
+totalPages = 1;
+
+fetchTasks() {  
   this.isLoading = true;
 
-  this.taskService.getTasks().subscribe({
+  this.taskService.getTasks(
+    this.currentPage,
+    this.itemsPerPage,
+    this.selectedStatus,
+    this.selectedPriority
+  ).subscribe({
     next: (res: any) => {
-      console.log("Api responce",res)
-      this.tasks = res; // ✅ flexible fix
+      console.log("API RESPONSE:", res);
+
+      this.tasks = [...(res.tasks || [])];
+      this.totalPages = res.totalPages || 1;
+
       this.isLoading = false;
+
+      // 🔥 IMPORTANT FIX
       this.cd.detectChanges();
     },
-    error: (err) => {
+    error: () => {
       this.isLoading = false;
-      console.error(err);
     }
   });
+}
+
+getPages(): number[] {
+  return Array(this.totalPages).fill(0).map((_, i) => i + 1);
+}
+
+goToPage(page: number) {
+  this.currentPage = page;
+  this.fetchTasks();
+}
+
+applyFilter() {
+  this.currentPage = 1;
+  this.fetchTasks();
 }
 
   // ADD task

@@ -9,17 +9,21 @@ import { authGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+ { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+
+  /* Protected layout */
   {
     path: '',
     component: LayoutComponent,
-    canActivate:[authGuard], // 🔥 wrapper
+    canActivate: [authGuard],
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },   // ✅ important
       { path: 'dashboard', component: TasksComponent },
       { path: 'create-task', component: CreateTaskComponent }
     ]
   },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   
 ];

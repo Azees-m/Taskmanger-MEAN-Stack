@@ -32,12 +32,46 @@ router.post("/", authMiddleware, async (req, res) => {
 
 //GET
 router.get("/", authMiddleware, async (req, res) => {
-  try{
-    const tasks = await Task.find({ userId: req.userId});
-    res.status(200).json(tasks);
-  }
-  catch(error){
-    res.status(500).json({ message: "Falied to fetch Tasks", error});
+  try {
+    const userId = req.userId;
+
+    // 🔥 query params
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const status = req.query.status;
+    const priority = req.query.priority;
+
+    const skip = (page - 1) * limit;
+
+    // 🔥 filter object
+    let filter = { userId };
+
+    if (status) {
+      filter.status = status;
+    }
+
+    if (priority) {
+      filter.priority = priority;
+    }
+
+    // 🔥 fetch tasks
+    const tasks = await Task.find(filter)
+      .sort({ createdAt: -1 })   // latest first
+      .skip(skip)
+      .limit(limit);
+
+    // 🔥 total count
+    const total = await Task.countDocuments(filter);
+
+    res.status(200).json({
+      tasks,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch tasks", error });
   }
 });
 

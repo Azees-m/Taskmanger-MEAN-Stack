@@ -11,9 +11,18 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   // GET all tasks
-  getTasks() {
-    return this.http.get<any[]>(this.API_URL);
-  }
+getTasks(page: number, limit: number, status?: string, priority?: string) {
+
+  let params: any = {
+    page,
+    limit
+  };
+
+  if (status) params.status = status;
+  if (priority) params.priority = priority;
+
+  return this.http.get<any>(this.API_URL, { params });
+}
 
   // ADD task
   addTask(task: { title: string; priority: string ,description:string ,status:string,dueDate:string}) {

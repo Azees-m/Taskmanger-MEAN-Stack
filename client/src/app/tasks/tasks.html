@@ -8,64 +8,104 @@
       <!-- Heading -->
       <h2 class="page-title">My Tasks</h2>
 
-      <!-- Empty state -->
-      <p *ngIf="!tasks.length" class="empty">
-        No tasks yet 🚀
+<p *ngIf="isLoading" class="loading">
+  Loading tasks...
+</p>
+
+<!-- Empty -->
+<p *ngIf="!isLoading && tasks && tasks.length === 0" class="empty">
+  No tasks yet 🚀
+</p>
+
+<!-- Filters -->
+<div class="filters" *ngIf="!isLoading">
+  <select [(ngModel)]="selectedStatus" (change)="applyFilter()">
+    <option value="">All Status</option>
+    <option value="todo">Todo</option>
+    <option value="done">Done</option>
+  </select>
+
+  <select [(ngModel)]="selectedPriority" (change)="applyFilter()">
+    <option value="">All Priority</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+</div>
+
+<!-- Task Grid -->
+<div class="task-grid" *ngIf="!isLoading && tasks && tasks.length > 0">
+
+  <div class="task-card" *ngFor="let task of tasks; trackBy: trackById">
+
+    <div class="priority-bar {{task.priority}}"></div>
+
+    <div class="task-content">
+
+      <div class="card-header">
+        <h3>{{ task.title }}</h3>
+        <span class="status {{task.status}}">
+          {{ task.status }}
+        </span>
+      </div>
+
+      <p class="desc">
+        {{ task.description || 'No description provided' }}
       </p>
 
-      <!-- Task Grid -->
-      <div class="task-grid">
+      <div class="card-footer">
 
-        <div class="task-card" *ngFor="let task of tasks">
+        <div class="due">
+          <span class="material-icons">schedule</span>
+          {{ task.dueDate | date:'MMM d, y' }}
+        </div>
 
-          <!-- Priority bar -->
-          <div class="priority-bar {{task.priority}}"></div>
+        <div class="actions">
+          <button *ngIf="task.status !== 'done'"
+                  (click)="markAsDone(task._id)">
+            <span class="material-icons">check</span>
+          </button>
 
-          <div class="task-content">
-
-            <!-- Header -->
-            <div class="card-header">
-              <h3>{{ task.title }}</h3>
-
-              <span class="status {{task.status}}">
-                {{ task.status }}
-              </span>
-            </div>
-
-            <!-- Description -->
-            <p class="desc">
-              {{ task.description || 'No description provided' }}
-            </p>
-
-            <!-- Footer -->
-            <div class="card-footer">
-
-              <!-- Due date -->
-              <div class="due"
-                   >
-                <span class="material-icons">schedule</span>
-                {{ task.dueDate | date:'MMM d, y' }}
-              </div>
-
-              <!-- Actions -->
-              <div class="actions">
-                <button *ngIf="task.status !== 'done'"
-                        (click)="markAsDone(task._id)">
-                  <span class="material-icons">check</span>
-                </button>
-
-                <button (click)="deleteTask(task._id)">
-                  <span class="material-icons">delete</span>
-                </button>
-              </div>
-
-            </div>
-
-          </div>
-
+          <button (click)="deleteTask(task._id)">
+            <span class="material-icons">delete</span>
+          </button>
         </div>
 
       </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="pagination">
+
+  <button 
+    class="page-btn"
+    (click)="prevPage()" 
+    [disabled]="currentPage === 1">
+    ‹ Prev
+  </button>
+
+  <!-- Page numbers -->
+  <button 
+    class="page-number"
+    *ngFor="let page of getPages()"
+    [class.active]="page === currentPage"
+    (click)="goToPage(page)">
+    {{ page }}
+  </button>
+
+  <button 
+    class="page-btn"
+    (click)="nextPage()" 
+    [disabled]="currentPage === totalPages">
+    Next ›
+  </button>
+
+</div>
 
     </div>
 
