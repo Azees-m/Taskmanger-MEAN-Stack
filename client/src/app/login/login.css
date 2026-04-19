@@ -4,7 +4,7 @@ h2 {
 
 form {
   max-width: 400px;
-  margin: 100px auto;
+  margin: 50px auto;
   background: #ffffff;
   padding: 30px;
   border-radius: 8px;
@@ -32,7 +32,6 @@ button {
   border: none;
   border-radius: 20px;
   font-size: 16px;
-  cursor: pointer;
   margin-top: 10px;
   display: block;
   margin-left: auto;

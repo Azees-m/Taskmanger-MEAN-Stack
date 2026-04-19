@@ -35,7 +35,7 @@ router.get("/", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
 
-    // 🔥 query params
+    //  query params
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const status = req.query.status;
@@ -43,7 +43,7 @@ router.get("/", authMiddleware, async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    // 🔥 filter object
+    //  filter object
     let filter = { userId };
 
     if (status) {
@@ -54,13 +54,13 @@ router.get("/", authMiddleware, async (req, res) => {
       filter.priority = priority;
     }
 
-    // 🔥 fetch tasks
+    //  fetch tasks
     const tasks = await Task.find(filter)
       .sort({ createdAt: -1 })   // latest first
       .skip(skip)
       .limit(limit);
 
-    // 🔥 total count
+    //  total count
     const total = await Task.countDocuments(filter);
 
     res.status(200).json({

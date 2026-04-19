@@ -1,6 +1,6 @@
 form {
   max-width: 400px;
-  margin: 80px auto;
+  margin: 50px auto;
   padding: 30px;
   background: #ffffff;
   border-radius: 6px;
@@ -42,8 +42,8 @@ p {
   cursor: pointer;
   font-weight: bold;
   margin-top: 15px;
-     display: block;       /* 🔥 important */
-  margin-left: auto;    /* 🔥 center */
+     display: block;      
+  margin-left: auto;   
   margin-right: auto; 
 }
 

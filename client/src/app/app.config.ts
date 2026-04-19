@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
 
-    // ✅ Toast config
+    //  Toast config
     provideToastr({
       positionClass: 'toast-top-center',
       timeOut: 2000,
